@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { background: #0A0A0A; scroll-behavior: smooth; scroll-padding-top: 96px; overflow-x: clip; }
+body { margin: 0; background: #0A0A0A; color: #F5F5F5; font-family: Inter, system-ui, sans-serif; overflow-x: clip; -webkit-font-smoothing: antialiased; }
+::selection { background: #4E85BF; color: #fff; }
+img { max-width: 100%; }
+
+/* Gradient border revealed on hover (or always, with .gb-always) */
+.gb { position: relative; }
+.gb::before {
+  content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(90deg, #89AACC, #4E85BF, #89AACC); background-size: 200% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .4s ease; animation: gbflow 4s linear infinite;
+}
+.gb:hover::before, .gb:focus-visible::before, .gb-always::before { opacity: 1; }
+@keyframes gbflow { to { background-position: 200% 0; } }
+
+@keyframes scrollline { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+.scroll-line { animation: scrollline 2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .gb::before, .scroll-line { animation: none; }
+}
